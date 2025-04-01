@@ -1,4 +1,4 @@
-import { Loaderpage } from "@/routes/loader-page";
+import { LoaderPage } from "@/routes/loader-page";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
@@ -44,7 +44,7 @@ const AuthHandler = () => {
   }, [isSignedIn, user, pathname, Navigate]);
 
   if (loading) {
-    return <Loaderpage />;
+    return <LoaderPage />;
   }
 
   return null;
