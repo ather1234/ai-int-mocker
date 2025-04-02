@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { TooltipButton } from "./tooltip-button";
 import { Eye, Newspaper, Sparkles } from "lucide-react";
 
-interface InterviewPinProps {
+export interface InterviewPinProps {
   interview: Interview;
   onMockPage?: boolean;
 }
