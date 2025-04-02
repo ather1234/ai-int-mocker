@@ -28,7 +28,6 @@ interface TooltipButtonProps {
   disbaled?: boolean;
   loading?: boolean;
 }
-
 export const TooltipButton = ({
   content,
   icon,
