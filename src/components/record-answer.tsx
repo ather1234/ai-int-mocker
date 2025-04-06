@@ -16,7 +16,7 @@ import WebCam from "react-webcam";
 import { TooltipButton } from "./tooltip-button";
 import { toast } from "sonner";
 import { chatSession } from "@/scripts";
-import { SaveModal } from "@/components/save-modal";
+import { SaveModal } from "./save-modal";
 import {
   addDoc,
   collection,

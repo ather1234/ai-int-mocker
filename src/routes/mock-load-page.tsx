@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { db } from "@/config/firebase.config";
 import { Interview } from "@/types";
 import { doc, getDoc } from "firebase/firestore";
@@ -14,28 +15,32 @@ import WebCam from "react-webcam";
 export const MockLoadPage = () => {
   const { interviewId } = useParams<{ interviewId: string }>();
   const [interview, setInterview] = useState<Interview | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isWebCamEnabled, setIsWebCamEnabled] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoading(true);
     const fetchInterview = async () => {
-      if (interviewId) {
-        try {
-          const interviewDoc = await getDoc(doc(db, "interviews", interviewId));
-          if (interviewDoc.exists()) {
-            setInterview({
-              id: interviewDoc.id,
-              ...interviewDoc.data(),
-            } as Interview);
-          }
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setIsLoading(false);
+      if (!interviewId) {
+        navigate("/generate", { replace: true });
+        return;
+      }
+
+      try {
+        const interviewDoc = await getDoc(doc(db, "interviews", interviewId));
+        if (interviewDoc.exists()) {
+          setInterview({
+            id: interviewDoc.id,
+            ...interviewDoc.data(),
+          } as Interview);
+        } else {
+          navigate("/generate", { replace: true });
         }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -44,14 +49,6 @@ export const MockLoadPage = () => {
 
   if (isLoading) {
     return <LoaderPage className="w-full h-[70vh]" />;
-  }
-
-  if (!interviewId) {
-    navigate("/generate", { replace: true });
-  }
-
-  if (!interview) {
-    navigate("/generate", { replace: true });
   }
 
   return (
@@ -79,7 +76,7 @@ export const MockLoadPage = () => {
           </AlertTitle>
           <AlertDescription className="text-sm text-yellow-700 mt-1">
             Please enable your webcam and microphone to start the AI-generated
-            mock interview. The interview consists of five questions. You’ll
+            mock interview. The interview consists of five questions. You'll
             receive a personalized report based on your responses at the end.{" "}
             <br />
             <br />
@@ -94,8 +91,15 @@ export const MockLoadPage = () => {
         <div className="w-full h-[400px] md:w-96 flex flex-col items-center justify-center border p-4 bg-gray-50 rounded-md">
           {isWebCamEnabled ? (
             <WebCam
+              audio={true} // Enable microphone
               onUserMedia={() => setIsWebCamEnabled(true)}
-              onUserMediaError={() => setIsWebCamEnabled(false)}
+              onUserMediaError={(error) => {
+                console.error("WebCam Error:", error); // Log errors for debugging
+                alert(
+                  "Please allow microphone and webcam access in your browser settings."
+                );
+                setIsWebCamEnabled(false);
+              }}
               className="w-full h-full object-cover rounded-md"
             />
           ) : (

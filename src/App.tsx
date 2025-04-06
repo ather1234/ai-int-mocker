@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { publiclayout as PublicLayout } from "@/layouts/PublicLayout";
+import { PublicLayout } from "@/layouts/public-layout";
 import AuthenticationLayout from "@/layouts/auth-layout";
+// Removed duplicate import of PublicLayout
 import ProtectRoutes from "@/layouts/protected-routes";
 import { MainLayout } from "@/layouts/main-layout";
 
@@ -20,17 +21,18 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Public routes */}
+        {/* public routes */}
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
         </Route>
-        {/*authhentication layout*/}
+
+        {/* authentication layout */}
         <Route element={<AuthenticationLayout />}>
           <Route path="/signin/*" element={<SignInPage />} />
           <Route path="/signup/*" element={<SignUpPage />} />
         </Route>
 
-        {/* Protected routes */}
+        {/* protected routes */}
         <Route
           element={
             <ProtectRoutes>
@@ -38,13 +40,13 @@ const App = () => {
             </ProtectRoutes>
           }
         >
-          {/*add all the protected routes*/}
+          {/* add all the protect routes */}
           <Route element={<Generate />} path="/generate">
             <Route index element={<Dashboard />} />
             <Route path=":interviewId" element={<CreateEditPage />} />
             <Route path="interview/:interviewId" element={<MockLoadPage />} />
             <Route
-              path="interview/:interviewId"
+              path="interview/:interviewId/start"
               element={<MockInterviewPage />}
             />
             <Route path="feedback/:interviewId" element={<Feedback />} />
