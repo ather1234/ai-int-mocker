@@ -44,7 +44,7 @@ const HomePage = () => {
         {/*image section*/}
         <div className="w-full mt-4 rounded-xl bg-gray-100 h-[420px] drop-shadow-md overflow-hidden relative">
           <img
-            src="/public/hero.jpg"
+            src="/assets/img/office.jpg"
             alt=""
             className="w-full h-full object-cover"
           />
@@ -68,14 +68,14 @@ const HomePage = () => {
       {/*marquee section*/}
       <div className="w-full my-12">
         <Marquee pauseOnHover>
-          <MarqueImg img="/public/firebase.png" />
-          <MarqueImg img="/public/meet.png" />
-          <MarqueImg img="/public/zoom.png" />
-          <MarqueImg img="/public/firebase.png" />
-          <MarqueImg img="/public/microsoft.png" />
-          <MarqueImg img="/public/meet.png" />
-          <MarqueImg img="/public/tailwindcss.png" />
-          <MarqueImg img="/public/microsoft.png" />
+          <MarqueImg img="/assets/img/logo/firebase.png" />
+          <MarqueImg img="/assets/img/logo/meet.png" />
+          <MarqueImg img="/assets/img/logo/zoom.png" />
+          <MarqueImg img="/assets/img/logo/firebase.png" />
+          <MarqueImg img="/assets/img/logo/microsoft.png" />
+          <MarqueImg img="/assets/img/logo/meet.png" />
+          <MarqueImg img="/assets/img/logo/tailwindcss.png" />
+          <MarqueImg img="/assets/img/logo/microsoft.png" />
         </Marquee>
       </div>
       <Container className="py-8 space-y-8">
@@ -87,7 +87,7 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
           <div className="col-span-1 md:col-span-3">
             <img
-              src="/public/office.jpg"
+              src="/assets/img/office.jpg"
               alt=""
               className="w-full max-h-96 rounded-md object-cover"
             />

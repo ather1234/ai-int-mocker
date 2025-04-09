@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import useSpeechToText, { ResultType } from "react-hook-speech-to-text";
 import { useParams } from "react-router-dom";
-import WebCam from "react-webcam";
+import Webcam from "react-webcam";
 import { TooltipButton } from "./tooltip-button";
 import { toast } from "sonner";
 import { chatSession } from "@/scripts";
@@ -38,6 +38,13 @@ interface AIResponse {
   feedback: string;
 }
 
+export interface TooltipButtonProps {
+  content: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+  disabled?: boolean; // Ensure the disabled prop is included
+}
+
 export const RecordAnswer = ({
   question,
   isWebCam,
@@ -49,6 +56,7 @@ export const RecordAnswer = ({
     results,
     startSpeechToText,
     stopSpeechToText,
+    error: speechError,
   } = useSpeechToText({
     continuous: true,
     useLegacyResults: false,
@@ -68,10 +76,7 @@ export const RecordAnswer = ({
       stopSpeechToText();
 
       if (userAnswer?.length < 30) {
-        toast.error("Error", {
-          description: "Your answer should be more than 30 characters",
-        });
-
+        toast.error("Your answer should be more than 30 characters.");
         return;
       }
 
@@ -84,7 +89,12 @@ export const RecordAnswer = ({
 
       setAiResult(aiResult);
     } else {
-      startSpeechToText();
+      try {
+        startSpeechToText();
+      } catch (error) {
+        console.error("Error starting speech-to-text:", error);
+        toast.error("Failed to start speech recognition. Please try again.");
+      }
     }
   };
 
@@ -121,14 +131,12 @@ export const RecordAnswer = ({
       const aiResult = await chatSession.sendMessage(prompt);
 
       const parsedResult: AIResponse = cleanJsonResponse(
-        aiResult.response.text()
+        await aiResult.response.text()
       );
       return parsedResult;
     } catch (error) {
-      console.log(error);
-      toast("Error", {
-        description: "An error occurred while generating feedback.",
-      });
+      console.error("Error generating AI feedback:", error);
+      toast.error("An error occurred while generating feedback.");
       return { ratings: 0, feedback: "Unable to generate feedback" };
     } finally {
       setIsAiGenerating(false);
@@ -138,13 +146,20 @@ export const RecordAnswer = ({
   const recordNewAnswer = () => {
     setUserAnswer("");
     stopSpeechToText();
-    startSpeechToText();
+    try {
+      startSpeechToText();
+    } catch (error) {
+      console.error("Error restarting speech-to-text:", error);
+      toast.error("Failed to restart speech recognition. Please try again.");
+    }
   };
 
   const saveUserAnswer = async () => {
     setLoading(true);
 
     if (!aiResult) {
+      toast.error("No AI feedback available to save.");
+      setLoading(false);
       return;
     }
 
@@ -162,10 +177,7 @@ export const RecordAnswer = ({
 
       // if the user already answerd the question dont save it again
       if (!querySnap.empty) {
-        console.log("Query Snap Size", querySnap.size);
-        toast.info("Already Answered", {
-          description: "You have already answered this question",
-        });
+        toast.info("You have already answered this question.");
         return;
       } else {
         // save the user answer
@@ -181,19 +193,17 @@ export const RecordAnswer = ({
           createdAt: serverTimestamp(),
         });
 
-        toast("Saved", { description: "Your answer has been saved.." });
+        toast.success("Your answer has been saved.");
       }
 
       setUserAnswer("");
       stopSpeechToText();
     } catch (error) {
-      toast("Error", {
-        description: "An error occurred while generating feedback.",
-      });
-      console.log(error);
+      console.error("Error saving user answer:", error);
+      toast.error("An error occurred while saving your answer.");
     } finally {
       setLoading(false);
-      setOpen(!open);
+      setOpen(false);
     }
   };
 
@@ -205,6 +215,13 @@ export const RecordAnswer = ({
 
     setUserAnswer(combineTranscripts);
   }, [results]);
+
+  useEffect(() => {
+    if (speechError) {
+      console.error("Speech recognition error:", speechError);
+      toast.error("Speech recognition failed. Please check your microphone.");
+    }
+  }, [speechError]);
 
   return (
     <div className="w-full flex flex-col items-center gap-8 mt-4">
@@ -218,7 +235,7 @@ export const RecordAnswer = ({
 
       <div className="w-full h-[400px] md:w-96 flex flex-col items-center justify-center border p-4 bg-gray-50 rounded-md">
         {isWebCam ? (
-          <WebCam
+          <Webcam
             onUserMedia={() => setIsWebCam(true)}
             onUserMediaError={() => setIsWebCam(false)}
             className="w-full h-full object-cover rounded-md"
@@ -228,7 +245,7 @@ export const RecordAnswer = ({
         )}
       </div>
 
-      <div className="flex itece justify-center gap-3">
+      <div className="flex items-center justify-center gap-3">
         <TooltipButton
           content={isWebCam ? "Turn Off" : "Turn On"}
           icon={
@@ -277,13 +294,12 @@ export const RecordAnswer = ({
         <h2 className="text-lg font-semibold">Your Answer:</h2>
 
         <p className="text-sm mt-2 text-gray-700 whitespace-normal">
-          {userAnswer || "Start recording to see your ansewer here"}
+          {userAnswer || "Start recording to see your answer here."}
         </p>
 
         {interimResult && (
           <p className="text-sm text-gray-500 mt-2">
-            <strong>Current Speech:</strong>
-            {interimResult}
+            <strong>Current Speech:</strong> {interimResult}
           </p>
         )}
       </div>
