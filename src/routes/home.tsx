@@ -44,7 +44,7 @@ const HomePage = () => {
         {/*image section*/}
         <div className="w-full mt-4 rounded-xl bg-gray-100 h-[420px] drop-shadow-md overflow-hidden relative">
           <img
-            src="/assets/img/office.jpg"
+            src="/assets/img/hero.jpg"
             alt=""
             className="w-full h-full object-cover"
           />
