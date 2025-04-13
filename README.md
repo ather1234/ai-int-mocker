@@ -1,6 +1,5 @@
 https://ai-mock-interview-bb63e.web.app/ (Check out the website by clicking on the link )
 
-![Screenshot 2025-04-13 040319](https://github.com/user-attachments/assets/422972a2-ef4c-483f-9fdc-a9497beae7db)# React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -54,8 +53,11 @@ export default tseslint.config({
   },
 })
 
+```
+
 ![Screenshot 2025-04-13 035943](https://github.com/user-attachments/assets/9ab9a921-d81d-47e7-b088-bfe8ada9262d)
 
+![Screenshot 2025-04-13 040319](https://github.com/user-attachments/assets/422972a2-ef4c-483f-9fdc-a9497beae7db)# React + TypeScript + Vite
 
 ![Screenshot 2025-04-13 040005](https://github.com/user-attachments/assets/5d12ee51-e3e9-4755-9889-6028d067361e)
 
@@ -81,6 +83,5 @@ export default tseslint.config({
 
 
 ![Screenshot 2025-04-13 061529](https://github.com/user-attachments/assets/6b4a950b-cf7a-46ca-b9f4-214a8a842b91)
-```
 
 
