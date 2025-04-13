@@ -1,4 +1,6 @@
-# React + TypeScript + Vite
+https://ai-mock-interview-bb63e.web.app/ (Check out the website by clicking on the link )
+
+![Screenshot 2025-04-13 040319](https://github.com/user-attachments/assets/422972a2-ef4c-483f-9fdc-a9497beae7db)# React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -51,4 +53,34 @@ export default tseslint.config({
     ...reactDom.configs.recommended.rules,
   },
 })
+
+![Screenshot 2025-04-13 035943](https://github.com/user-attachments/assets/9ab9a921-d81d-47e7-b088-bfe8ada9262d)
+
+
+![Screenshot 2025-04-13 040005](https://github.com/user-attachments/assets/5d12ee51-e3e9-4755-9889-6028d067361e)
+
+
+
+
+![Screenshot 2025-04-13 040319](https://github.com/user-attachments/assets/17880500-c75c-45fc-bfe8-58adff19d738)
+
+
+
+![Screenshot 2025-04-13 061408](https://github.com/user-attachments/assets/b1516a72-d159-496c-9a89-de135b10dfdd)
+
+
+
+
+
+![Screenshot 2025-04-13 061435](https://github.com/user-attachments/assets/a7b8a4de-2339-4469-89cf-6aa761f90607)
+![Screenshot 2025-04-13 061459](https://github.com/user-attachments/assets/1bca9d77-bd41-4960-bbe5-906d034769d2)
+
+
+
+
+
+
+![Screenshot 2025-04-13 061529](https://github.com/user-attachments/assets/6b4a950b-cf7a-46ca-b9f4-214a8a842b91)
 ```
+
+
